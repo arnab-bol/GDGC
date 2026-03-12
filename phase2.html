@@ -14,6 +14,7 @@
 
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Bungee&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&display=swap');
 
 body{
 margin:0;
@@ -42,7 +43,6 @@ border-radius:20px;
 width:70%;
 max-width:420px;
 box-shadow:0 20px 50px rgba(0,0,0,0.35);
-
 animation: float 4s ease-in-out infinite;
 }
 
@@ -54,14 +54,23 @@ animation: float 4s ease-in-out infinite;
 
 .logo{
 width:80px;
-margin-bottom:15px;
-animation: bounce 3s infinite;
+margin-bottom:10px;
+animation:bounce 3s infinite;
 }
 
 @keyframes bounce{
 0%{transform:translateY(0)}
 50%{transform:translateY(-10px)}
 100%{transform:translateY(0)}
+}
+
+.team{
+font-family:'Orbitron', sans-serif;
+font-size:34px;
+font-weight:700;
+letter-spacing:2px;
+color:#1b4f91;
+margin-bottom:15px;
 }
 
 h2{
@@ -71,8 +80,6 @@ letter-spacing:2px;
 color:#0b2f5e;
 }
 
-/* input styling */
-
 input{
 width:100%;
 padding:13px;
@@ -80,31 +87,6 @@ border-radius:8px;
 border:1px solid #ccc;
 margin-bottom:18px;
 font-size:14px;
-transition:0.3s;
-}
-
-/* placeholder style */
-
-input::placeholder{
-color:#888;
-font-size:13px;
-transition:0.3s;
-}
-
-/* placeholder fade on focus */
-
-input:focus::placeholder{
-opacity:0.4;
-transform:translateX(5px);
-}
-
-/* glowing focus */
-
-input:focus{
-outline:none;
-border-color:#3b82f6;
-box-shadow:0 0 10px rgba(59,130,246,0.6);
-transform:scale(1.02);
 }
 
 .link{
@@ -114,16 +96,13 @@ background:linear-gradient(135deg,#3b82f6,#1d4ed8);
 color:white;
 padding:14px 28px;
 border-radius:12px;
-font-weight:500;
 border:none;
 cursor:pointer;
-font-size:15px;
-transition:0.3s;
 }
 
-.link:hover{
-transform:translateY(-3px);
-box-shadow:0 8px 25px rgba(0,0,0,0.3);
+.error{
+color:red;
+margin-top:10px;
 }
 
 </style>
@@ -136,27 +115,46 @@ box-shadow:0 8px 25px rgba(0,0,0,0.3);
 
 <img class="logo" src="https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png">
 
+<div class="team">TEAM AB</div>
+
 <h2>Sign in to GitHub</h2>
 
 <form id="loginForm">
 
-<input type="text" placeholder="Username or email address" required>
-
-<input type="password" placeholder="Password" required>
+<input id="passwordInput" type="password" placeholder="Password" required>
 
 <button class="link" type="submit">Sign in</button>
 
 </form>
 
+<div id="error" class="error"></div>
+
 </div>
 
 <script>
 
+/* password pool */
+const passwords=[
+"123456",
+"111111",
+"admin",
+"qwerty",
+"password"
+];
+
+/* generate random password ONCE when page loads */
+const activePassword=passwords[Math.floor(Math.random()*passwords.length)];
+
+/* login logic */
 document.getElementById("loginForm").addEventListener("submit",function(e){
 
 e.preventDefault();
 
-let tab = window.open("", "_blank");
+let entered=document.getElementById("passwordInput").value;
+
+if(entered===activePassword){
+
+let tab=window.open("","_blank");
 
 tab.document.write(`
 
@@ -164,9 +162,10 @@ tab.document.write(`
 <html>
 <head>
 
-<title>GitHub</title>
-
 <style>
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&display=swap');
 
 body{
 margin:0;
@@ -175,10 +174,10 @@ display:flex;
 justify-content:center;
 align-items:center;
 font-family:Poppins;
+
 background: linear-gradient(-45deg,#6aa9ff,#1b4f91,#001f3f,#3b82f6);
 background-size:400% 400%;
 animation: gradientMove 12s ease infinite;
-text-align:center;
 }
 
 @keyframes gradientMove{
@@ -191,29 +190,51 @@ text-align:center;
 background:white;
 padding:60px;
 border-radius:20px;
+text-align:center;
 box-shadow:0 20px 50px rgba(0,0,0,0.35);
-animation:fade 1s ease;
+animation: float 4s ease-in-out infinite;
+}
+
+@keyframes float{
+0%{transform:translateY(0px)}
+50%{transform:translateY(-8px)}
+100%{transform:translateY(0px)}
 }
 
 .logo{
 width:90px;
-animation:bounce 2s infinite;
+animation:bounce 3s infinite;
 }
 
 @keyframes bounce{
 0%{transform:translateY(0)}
-50%{transform:translateY(-12px)}
+50%{transform:translateY(-10px)}
 100%{transform:translateY(0)}
 }
 
-@keyframes fade{
-from{opacity:0; transform:translateY(30px)}
-to{opacity:1; transform:translateY(0)}
+.team{
+font-family:'Orbitron', sans-serif;
+font-size:34px;
+font-weight:700;
+letter-spacing:2px;
+color:#1b4f91;
+margin-bottom:15px;
 }
 
-h1{
-color:#1b4f91;
+.check{
+font-size:60px;
+color:#4CAF50;
+}
+
+.btn{
 margin-top:20px;
+padding:12px 30px;
+border:none;
+border-radius:10px;
+background:#4CAF50;
+color:white;
+font-size:16px;
+cursor:pointer;
 }
 
 </style>
@@ -226,9 +247,11 @@ margin-top:20px;
 
 <img class="logo" src="https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png">
 
-<h1>Logged in Successfully ✅</h1>
+<div class="team">TEAM AB</div>
 
-<p>Welcome to GitHub</p>
+<div class="check">✔</div>
+
+<h1>Login Successful</h1>
 
 </div>
 
@@ -236,6 +259,14 @@ margin-top:20px;
 </html>
 
 `);
+
+}
+else{
+
+document.getElementById("error").innerText="Wrong password. Try again.";
+document.getElementById("passwordInput").value="";
+
+}
 
 });
 
